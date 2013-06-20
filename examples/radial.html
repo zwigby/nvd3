@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="../src/nv.d3.css" rel="stylesheet" type="text/css">
+<style>
+
+body {
+  overflow-y:scroll;
+  background: #333;
+}
+
+text {
+  font: 12px sans-serif;
+}
+
+</style>
+<body>
+
+<svg id="test1"></svg>
+
+<script src="../lib/d3.v3.js"></script>
+<script src="../nv.d3.js"></script>
+<script src="../src/models/radial.js"></script>
+<script>
+
+  var testdata = [];
+
+
+for(var i = 0; i < 60; i++) {
+  testdata.push({
+    time : i,
+    value : 9 + (i / 60) * 3
+  })
+}
+
+
+nv.addGraph(function() {
+    var width = nv.utils.windowSize().width - 40,
+        height = nv.utils.windowSize().height - 40;
+
+    var chart = nv.models.radial()
+        .y(function(d) {
+          return d.value;
+        })
+        .innerRadius(50)
+        .width(300)
+        .height(300)
+        .fillColor('#378474')
+        .strokeColor('#52bfa2')
+        .strokeWidth(2);
+
+    d3.select("#test1")
+        .datum(testdata)
+        .transition().duration(1200)
+        .attr('width', width)
+        .attr('height', height)
+        .call(chart);
+
+    return chart;
+});
+
+</script>
